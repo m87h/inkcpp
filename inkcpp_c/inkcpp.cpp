@@ -198,6 +198,11 @@ extern "C" {
 		return reinterpret_cast<runner*>(self)->get()->choose(choice_id);
 	}
 
+	int ink_runner_move_to(HInkRunner* self, const char* path)
+	{
+		return reinterpret_cast<runner*>(self)->get()->move_to(ink::hash_string(path));
+	}
+
 	void ink_runner_bind_void(
 	    HInkRunner* self, const char* function_name, InkExternalFunctionVoid callback,
 	    int lookaheadSafe

@@ -257,6 +257,12 @@ typedef struct HInkSTory    HInkStory;
 	void              ink_runner_choose(HInkRunner* self, int index);
 
 	/** @memberof HInkRunner
+	 * @copydoc ink::runtime::runner_interface::move_to()
+	 * @param self
+	 */
+	 int              ink_runner_move_to(HInkRunner* self, const char* path);
+
+	/** @memberof HInkRunner
 	 * Binds a external function which is called form the runtime, with no return value.
 	 * @see ink_runner_bind()
 	 * @param self
