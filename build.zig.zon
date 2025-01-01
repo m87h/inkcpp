@@ -1,0 +1,6 @@
+.{
+    .name = "inkcpp",
+    .version = "0.1.6",
+    .minimum_zig_version = "0.13.0",
+    .paths = .{ "build.zig", "build.zig.zon", "inkcpp", "inkcpp_c", "inkcpp_compiler", "shared" },
+}

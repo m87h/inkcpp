@@ -23,3 +23,7 @@ Bin/
 # Visual Studio
 /out/build/
 /.vs
+
+# Zig
+.zig-cache/
+zig-out/

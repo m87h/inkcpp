@@ -1,0 +1,15 @@
+.{
+    .name = "zig_example",
+    .version = "0.0.0",
+    .dependencies = .{
+        .inkcpp = .{
+            .path = "../..",
+        },
+    },
+
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}
