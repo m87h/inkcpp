@@ -205,38 +205,38 @@ extern "C" {
 
 	void ink_runner_bind_void(
 	    HInkRunner* self, const char* function_name, InkExternalFunctionVoid callback,
-	    int lookaheadSafe
+	    void* ctx, int lookaheadSafe
 	)
 	{
 		static_assert(sizeof(ink::runtime::value) >= sizeof(InkValue));
 		return reinterpret_cast<runner*>(self)->get()->bind(
 		    function_name,
-		    [callback](size_t len, const value* vals) {
+		    [callback, ctx](size_t len, const value* vals) {
 			    InkValue* c_vals = reinterpret_cast<InkValue*>(const_cast<value*>(vals));
 			    int       c_len  = len;
 			    for (int i = 0; i < c_len; ++i) {
 				    c_vals[i] = inkvar_to_c(const_cast<value&>(vals[i]));
 			    }
-			    callback(c_len, c_vals);
+			    callback(c_len, c_vals, ctx);
 		    },
 		    lookaheadSafe
 		);
 	}
 
 	void ink_runner_bind(
-	    HInkRunner* self, const char* function_name, InkExternalFunction callback, int lookaheadSafe
+	    HInkRunner* self, const char* function_name, InkExternalFunction callback, void* ctx, int lookaheadSafe
 	)
 	{
 		static_assert(sizeof(ink::runtime::value) >= sizeof(InkValue));
 		return reinterpret_cast<runner*>(self)->get()->bind(
 		    function_name,
-		    [callback](size_t len, const value* vals) -> value {
+		    [callback, ctx](size_t len, const value* vals) -> value {
 			    InkValue* c_vals = reinterpret_cast<InkValue*>(const_cast<value*>(vals));
 			    int       c_len  = len;
 			    for (int i = 0; i < c_len; ++i) {
 				    c_vals[i] = inkvar_to_c(const_cast<value&>(vals[i]));
 			    }
-			    InkValue res = callback(c_len, c_vals);
+			    InkValue res = callback(c_len, c_vals, ctx);
 			    return inkvar_from_c(res);
 		    },
 		    lookaheadSafe

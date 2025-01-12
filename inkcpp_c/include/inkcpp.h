@@ -197,15 +197,17 @@ typedef struct HInkSTory    HInkStory;
 	 * Callback for a Ink external function which returns void
 	 * @param argc number of arguments
 	 * @param argv array containing the arguments
+	 * @param ctx bound context
 	 */
-	typedef InkValue (*InkExternalFunction)(int argc, const InkValue argv[]);
+	typedef InkValue (*InkExternalFunction)(int argc, const InkValue argv[], void* ctx);
 	/** @memberof HInkRunner
 	 * Callback for a Ink external function wihich returns a value
 	 * @param argc number of arguments
 	 * @param argv array contaning the arguments
+	 * @param ctx bound context
 	 * @return value to be furthe process by the ink runtime
 	 */
-	typedef void (*InkExternalFunctionVoid)(int argc, const InkValue argv[]);
+	typedef void (*InkExternalFunctionVoid)(int argc, const InkValue argv[], void* ctx);
 
 	/** @class HInkRunner
 	 * @ingroup clib
@@ -268,13 +270,14 @@ typedef struct HInkSTory    HInkStory;
 	 * @param self
 	 * @param function_name declared in ink script
 	 * @param callback
+	 * @param ctx
 	 * @param lookaheadSafe if false stop glue lookahead if encounter this function
 	 *                      this prevents double execution of external functions but can lead to
 	 *                      missing glues
 	 */
 	void              ink_runner_bind_void(
 	                 HInkRunner* self, const char* function_name, InkExternalFunctionVoid callback,
-	                 int lookaheadSafe
+	                 void* ctx, int lookaheadSafe
 	             );
 	/** @memberof HInkRunner
 	 * Binds a external function which is called from the runtime, with a return vallue.
@@ -282,12 +285,13 @@ typedef struct HInkSTory    HInkStory;
 	 * @param self
 	 * @param function_name name of external function declared inside ink script
 	 * @param callback
+	 * @param ctx
 	 * @param lookaheadSafe if false stop glue lookahead if encounter this function
 	 *                      this prevents double execution of external functions but can lead to
 	 *                      missing glues
 	 */
 	void ink_runner_bind(
-	    HInkRunner* self, const char* function_name, InkExternalFunction callback, int lookaheadSafe
+	    HInkRunner* self, const char* function_name, InkExternalFunction callback, void* ctx, int lookaheadSafe
 	);
 
 

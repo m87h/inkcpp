@@ -3,7 +3,7 @@ const ink = @cImport({
     @cInclude("inkcpp.h");
 });
 
-fn inkAdd(argc: c_int, argv: [*c]const ink.InkValue) callconv(.C) ink.InkValue {
+fn inkAdd(argc: c_int, argv: [*c]const ink.InkValue, _: ?*anyopaque) callconv(.C) ink.InkValue {
     std.debug.assert(argc == 2);
     std.debug.assert(argv[0].type == ink.ValueTypeInt32);
     std.debug.assert(argv[1].type == ink.ValueTypeInt32);
@@ -25,7 +25,7 @@ pub fn main() !void {
     const story = ink.ink_story_from_file("test.bin");
     const runner = ink.ink_story_new_runner(story, null);
 
-    ink.ink_runner_bind(runner, "my_ink_function", &inkAdd, 1);
+    ink.ink_runner_bind(runner, "my_ink_function", &inkAdd, null, 1);
 
     while (true) {
         while (ink.ink_runner_can_continue(runner) != 0) {
